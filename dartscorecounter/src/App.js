@@ -1,12 +1,9 @@
-
-import './App.css';
+import VoiceRecognition from './VoiceRecognition'
 
 function App() {
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div>
+    <VoiceRecognition/>
+  </div>;
 }
 
 export default App;
