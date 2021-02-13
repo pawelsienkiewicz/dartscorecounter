@@ -4,11 +4,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 
 const VoiceRecognition = () => {
-  const {
-    transcript,
-    resetTranscript,
-    finalTranscript,
-  } = useSpeechRecognition();
+  const { resetTranscript, finalTranscript } = useSpeechRecognition();
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return alert("Your browser does not support Speech Recognition API!");
@@ -24,15 +20,17 @@ const VoiceRecognition = () => {
     for (let i = 0; i < scores.length; i++) {
       sum += scores[i];
     }
-    return sum / scores.length;
+    return (sum / scores.length).toFixed(2);
   }
+
+  var lastScore = scores[scores.length - 1];
 
   return (
     <div>
       <button
         onClick={() =>
           SpeechRecognition.startListening({
-            language: "pl",
+            language: "en-US",
             continuous: true,
           })
         }
@@ -41,8 +39,15 @@ const VoiceRecognition = () => {
       </button>
       <button onClick={SpeechRecognition.stopListening}>Stop</button>
       <button onClick={resetTranscript}>Reset</button>
-      <p>{finalTranscript}</p>
-      <AverageScore />
+      {finalTranscript.length === 0 ? (
+        <p>Scores: 0</p>
+      ) : (
+        <p>Scores: {finalTranscript} </p>
+      )}
+      <p>Last dart: {lastScore}</p>
+      <p>
+        Average score: <AverageScore />
+      </p>
     </div>
   );
 };
